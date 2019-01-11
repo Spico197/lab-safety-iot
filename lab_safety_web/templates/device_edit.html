@@ -1,0 +1,45 @@
+{% extends 'dashboard_base.html' %}
+
+{% block name%}{{ name }}{% endblock %}
+{% block hello_name%}{{ name }}{% endblock %}
+
+{% block device_id %} {{ device_id }} {% endblock %}
+{% block device_status %} {{ device_status }} {% endblock %}
+{% block user_number %} {{ user_number }} {% endblock %}
+
+{% block content_wrapper %}
+    <div class="content-wrapper">
+          <div class="row">
+              <div class="card col-7">
+                <div class="card-body">
+                      <h4 class="card-title">更新设备</h4>
+                      <p class="card-description">
+                        {{ return_instruction }}
+                      </p>
+                      <form action="/device/edit/" method="post" class="forms-sample">
+                        {% csrf_token %}
+                        <div class="form-group">
+                          <label>设备号</label>
+                            <p>{{ edit_device_id }}</p>
+                            <input type="hidden" class="form-control" name="edit_device_id" value="{{ edit_device_id }}">
+                        </div>
+                          <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">状态</label>
+                          <div class="col-sm-9">
+                            <select class="form-control" name="status">
+                              <option>上线</option>
+                              <option>下线</option>
+                            </select>
+                          </div>
+                        </div>
+                      <div class="form-group">
+                          <label>备注</label>
+                          <input type="text" class="form-control" name="comment">
+                        </div>
+                        <input type="submit" class="btn btn-success mr-2" value="提交">
+                      </form>
+                    </div>
+              </div>
+          </div>
+        </div>
+{% endblock %}

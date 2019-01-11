@@ -1,0 +1,99 @@
+{% extends 'dashboard_base.html' %}
+
+{% block name%}{{ name }}{% endblock %}
+{% block hello_name%}{{ name }}{% endblock %}
+
+{% block device_id %} {{ device_id }} {% endblock %}
+{% block device_status %} {{ device_status }} {% endblock %}
+{% block user_number %} {{ user_number }} {% endblock %}
+
+{% block content_wrapper %}
+    <div class="content-wrapper">
+          <div class="row">
+              <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>电话号码</th>
+                          <th>设备号</th>
+                          <th>姓名</th>
+                          <th>班级</th>
+                          <th>学号</th>
+                          <th>是否为管理员</th>
+                          <th>上次登录时间</th>
+                          <th>加入时间</th>
+                          <th>备注</th>
+                          <th>管理</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for user in users %}
+                          <tr>
+                              <td>{{ user.phone_number }}</td>
+                              <td>{{ user.device_id }}</td>
+                              <td>{{ user.name }}</td>
+                              <td>{{ user.class_number }}</td>
+                              <td>{{ user.id_number }}</td>
+                              <td>{{ user.is_admin }}</td>
+                              <td>{{ user.last_login_time }}</td>
+                              <td>{{ user.date_joined }}</td>
+                              <td>{{ user.comment }}</td>
+                              <td>
+                                  <div class="btn-group dropdown">
+                                  <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    管理
+                                  </button>
+                                  <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/user/edit/?phone_number={{ user.phone_number }}">
+                                      <i class="fa fa-reply fa-fw"></i>编辑用户</a>
+                                    <a class="dropdown-item" href="/user/delete/?phone_number={{ user.phone_number }}">
+                                      <i class="fa fa-history fa-fw"></i>删除用户</a>
+                                    <div class="dropdown-divider"></div>
+                                  </div>
+                                </div>
+                              </td>
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                      <div class="btn-group" role="group" aria-label="First group">
+                          {% if users.has_previous %}
+                            <a type="button" class="btn btn-light" href="/user/user/?page={{ users.previous_page_number }}"><</a>
+                          {% endif %}
+                            <a type="button" class="btn btn-light">{{ users.number }}/{{ users.paginator.num_pages }}</a>
+                            {% if users.has_next %}
+                                <a type="button" class="btn btn-light" href="/user/user/?page={{ users.next_page_number }}">></a>
+                        {% endif %}
+                        <div class="input-group">
+                            <form action="/user/user/" method="get">
+                              <input type="text" class="form-control" placeholder="跳转页码" name="page">
+                              <input type="submit" class="btn btn-primary" value="GO">
+                          </form>
+                        </div>
+                      </div>
+                    <div class="btn-group">
+                        <a class="btn btn-success btn-block" href="/user/new/">新增用户
+                        <i class="mdi mdi-plus"></i>
+                        </a>
+                    </div>
+                    <div class="input-group">
+                        <form action="/user/search/" method="get">
+                          <input type="text" class="form-control" placeholder="电话号码" name="phone_number">
+                          <input type="submit" class="btn btn-primary" value="搜索">
+                      </form>
+                    </div>
+                    {{ return_instruction }}
+                    </div>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

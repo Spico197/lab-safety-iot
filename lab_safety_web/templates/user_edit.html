@@ -1,0 +1,63 @@
+{% extends 'dashboard_base.html' %}
+
+{% block name%}{{ name }}{% endblock %}
+{% block hello_name%}{{ name }}{% endblock %}
+
+{% block device_id %} {{ device_id }} {% endblock %}
+{% block device_status %} {{ device_status }} {% endblock %}
+{% block user_number %} {{ user_number }} {% endblock %}
+
+{% block content_wrapper %}
+    <div class="content-wrapper">
+          <div class="row">
+              <div class="card col-7">
+                <div class="card-body">
+                      <h4 class="card-title">更新用户</h4>
+                      <p class="card-description">
+                        {{ return_instruction }}
+                      </p>
+                      <form action="/user/edit/" method="post" class="forms-sample">
+                        {% csrf_token %}
+                        <div class="form-group">
+                          <label>电话号码</label>
+                            <p>{{ edit_phone_number }}</p>
+                            <input type="hidden" class="form-control" name="edit_phone_number" value="{{ edit_phone_number }}">
+                        </div>
+                          <div class="form-group">
+                          <label>密码</label>
+                          <input type="text" class="form-control" placeholder="若不修改密码，则请勿填写" name="password">
+                        </div>
+                          <div class="form-group">
+                          <label>设备号</label>
+                          <input type="text" class="form-control" value="{{ edit_device_id }}" name="device_id">
+                        </div>
+                          <div class="form-group">
+                          <label>姓名</label>
+                          <input type="text" class="form-control" value="{{ edit_name }}" name="name">
+                        </div>
+                          <div class="form-group">
+                          <label>班级</label>
+                          <input type="text" class="form-control" value="{{ edit_class_number }}" name="class_number">
+                        </div>
+                          <div class="form-group">
+                          <label>学号</label>
+                          <input type="text" class="form-control" value="{{ edit_id_number }}" name="id_number">
+                        </div>
+                          <div class="form-group">
+                          <label>是否为管理员</label>
+                              <select class="form-control" name="is_admin">
+                              <option>是</option>
+                              <option selected>否</option>
+                            </select>
+                        </div>
+                          <div class="form-group">
+                          <label>备注</label>
+                          <input type="text" class="form-control" value="{{ edit_comment }}" name="comment">
+                        </div>
+                        <input type="submit" class="btn btn-success mr-2" value="提交">
+                      </form>
+                    </div>
+              </div>
+          </div>
+        </div>
+{% endblock %}

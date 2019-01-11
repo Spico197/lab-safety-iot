@@ -1,0 +1,72 @@
+{% extends 'dashboard_base.html' %}
+
+{% block name%}{{ name }}{% endblock %}
+{% block hello_name%}{{ name }}{% endblock %}
+
+{% block device_id %} {{ device_id }} {% endblock %}
+{% block device_status %} {{ device_status }} {% endblock %}
+
+{% block content_wrapper %}
+    <div class="content-wrapper">
+          <div class="row">
+              <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>上传时间</th>
+                          <th>设备号</th>
+                          <th>开关状态</th>
+                          <th>电压值（V）</th>
+                          <th>电流值（A）</th>
+                          <th>有功功率（W）</th>
+                          <th>有功总电量（KWH）</th>
+                          <th>功率因数</th>
+                          <th>二氧化碳排放量（KG）</th>
+                          <th>频率（Hz）</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for dat in data %}
+                          <tr>
+                              <td>{{ dat.data_time }}</td>
+                              <td>{{ dat.device_id }}</td>
+                              <td>{{ dat.switch_status }}</td>
+                              <td>{{ dat.voltage_value }}</td>
+                              <td>{{ dat.current_value }}</td>
+                              <td>{{ dat.active_power_value }}</td>
+                              <td>{{ dat.total_active_power_value }}</td>
+                              <td>{{ dat.power_factor_value }}</td>
+                              <td>{{ dat.co2_emission_value }}</td>
+                              <td>{{ dat.frequency_value }}</td>
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                      <div class="btn-group" role="group" aria-label="First group">
+                          {% if data.has_previous %}
+                            <a type="button" class="btn btn-light" href="/data/tables/?page={{ data.previous_page_number }}"><</a>
+                          {% endif %}
+                            <a type="button" class="btn btn-light">{{ data.number }}/{{ data.paginator.num_pages }}</a>
+                            {% if data.has_next %}
+                                <a type="button" class="btn btn-light" href="/data/tables/?page={{ data.next_page_number }}">></a>
+                        {% endif %}
+                        <div class="input-group">
+                            <form action="/data/tables/" method="get">
+                              <input type="text" class="form-control" placeholder="跳转页码" name="page">
+                              <input type="submit" class="btn btn-primary" value="GO"></input>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

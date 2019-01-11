@@ -1,0 +1,88 @@
+{% extends 'dashboard_base.html' %}
+
+{% block name%}{{ name }}{% endblock %}
+{% block hello_name%}{{ name }}{% endblock %}
+
+{% block device_id %} {{ device_id }} {% endblock %}
+{% block device_status %} {{ device_status }} {% endblock %}
+{% block user_number %} {{ user_number }} {% endblock %}
+
+{% block content_wrapper %}
+    <div class="content-wrapper">
+          <div class="row">
+              <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>设备号</th>
+                          <th>设备状态</th>
+                          <th>添加时间</th>
+                          <th>备注</th>
+                          <th>管理工具</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for dev in devices %}
+                          <tr>
+                              <td>{{ dev.device_id }}</td>
+                              <td>{{ dev.status }}</td>
+                              <td>{{ dev.date_joined }}</td>
+                              <td>{{ dev.comment }}</td>
+                              <td>
+                                  <div class="btn-group dropdown">
+                                  <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    管理
+                                  </button>
+                                  <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/device/edit/?device_id={{ dev.device_id }}">
+                                      <i class="fa fa-reply fa-fw"></i>编辑设备</a>
+                                    <a class="dropdown-item" href="/device/delete/?device_id={{ dev.device_id }}">
+                                      <i class="fa fa-history fa-fw"></i>删除设备</a>
+                                    <div class="dropdown-divider"></div>
+                                  </div>
+                                </div>
+                              </td>
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                      <div class="btn-group" role="group" aria-label="First group">
+                          {% if devices.has_previous %}
+                            <a type="button" class="btn btn-light" href="/device/device/?page={{ devices.previous_page_number }}"><</a>
+                          {% endif %}
+                            <a type="button" class="btn btn-light">{{ devices.number }}/{{ devices.paginator.num_pages }}</a>
+                            {% if devices.has_next %}
+                                <a type="button" class="btn btn-light" href="/device/device/?page={{ devices.next_page_number }}">></a>
+                        {% endif %}
+                        <div class="input-group">
+                            <form action="/device/device/" method="get">
+                              <input type="text" class="form-control" placeholder="跳转页码" name="page">
+                              <input type="submit" class="btn btn-primary" value="GO">
+                          </form>
+                        </div>
+                      </div>
+                    <div class="btn-group">
+                        <a class="btn btn-success btn-block" href="/device/new/">新增设备
+                        <i class="mdi mdi-plus"></i>
+                        </a>
+                    </div>
+                    <div class="input-group">
+                        <form action="/device/search/" method="get">
+                          <input type="text" class="form-control" placeholder="设备号" name="device_id">
+                          <input type="submit" class="btn btn-primary" value="搜索">
+                      </form>
+                    </div>
+                    {{ return_instruction }}
+                    </div>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

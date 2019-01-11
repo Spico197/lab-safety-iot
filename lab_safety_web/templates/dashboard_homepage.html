@@ -1,0 +1,118 @@
+{% extends "dashboard_base.html" %}
+
+{% block name%}{{ name }}{% endblock %}
+{% block hello_name%}{{ name }}{% endblock %}
+
+{% block device_id %} {{ device_id }} {% endblock %}
+{% block device_status %} {{ device_status }} {% endblock %}
+{% block user_number %} {{ user_number }} {% endblock %}
+
+
+{% block content_wrapper %}
+    <div class="content-wrapper">
+          <div class="row purchace-popup">
+            <div class="col-12">
+              <span class="d-block d-md-flex align-items-center">
+                <p>{{instruction }}</p>
+                <a class="btn ml-auto download-button popup-dismiss d-none d-md-block">收到</a>
+                <i class="mdi mdi-close popup-dismiss d-none d-md-block"></i>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-cube text-danger icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="mb-0 text-right">运行天数</p>
+                      <div class="fluid-container">
+                        <h3 class="font-weight-medium text-right mb-0">{{ running_days }}</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin strEmetch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-receipt text-warning icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="mb-0 text-right">数据条数</p>
+                      <div class="fluid-container">
+                        <h3 class="font-weight-medium text-right mb-0">{{ data_number }}</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-poll-box text-success icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="mb-0 text-right">设备数</p>
+                      <div class="fluid-container">
+                        <h3 class="font-weight-medium text-right mb-0">{{ device_number }}</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-account-location text-info icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="mb-0 text-right">用户数</p>
+                      <div class="fluid-container">
+                        <h3 class="font-weight-medium text-right mb-0">{{ user_number }}</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row d-none d-sm-flex mb-4">
+                    <div class="col-4">
+                      <h5 class="text-primary">电流峰值（A）</h5>
+                      <p>{{ current_peak_value }}</p>
+                    </div>
+                    <div class="col-4">
+                      <h5 class="text-primary">有功功率峰值（W）</h5>
+                      <p>{{ active_power_peak_value }}</p>
+                    </div>
+                    <div class="col-4">
+                      <h5 class="text-primary">有功总电量（KWH）</h5>
+                      <p>{{ total_active_power_peak_value }}</p>
+                    </div>
+                  </div>
+                  <div class="chart-container">
+                        {{ dashboard_chart }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

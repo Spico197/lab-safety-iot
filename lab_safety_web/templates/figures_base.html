@@ -1,0 +1,84 @@
+{% extends 'dashboard_base.html' %}
+
+{% block name%}{{ name }}{% endblock %}
+{% block hello_name%}{{ name }}{% endblock %}
+
+{% block device_id %} {{ device_id }} {% endblock %}
+{% block device_status %} {{ device_status }} {% endblock %}
+
+{% block content_wrapper %}
+    <div class="content-wrapper">
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">开关状态</h4>
+                    {{ switch_status }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">电压值（V）</h4>
+                  {{ voltage }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">电流值（A）</h4>
+                  {{ current }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">有功功率（W）</h4>
+                  {{ active_power }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">有功总电量（KWH）</h4>
+                  {{ total_active_power }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">功率因数</h4>
+                  {{ power_factor }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">二氧化碳排放量（KG）</h4>
+                  {{ co2_emission }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">频率（Hz）</h4>
+                  {{ frequency }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

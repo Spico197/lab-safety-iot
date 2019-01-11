@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>实验室用电信息统计平台</title>
+  <link rel="stylesheet" href="{% static 'vendors/iconfonts/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.addons.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
+    <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.min.js"></script>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+        <a class="navbar-brand brand-logo" href="">
+          <img src="{% static 'images/logo.svg' %}" alt="logo" />
+        </a>
+        <a class="navbar-brand brand-logo-mini" href="">
+          <img src="{% static 'images/logo-mini.svg' %}" alt="logo" />
+        </a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center">
+        <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
+          <li class="nav-item">
+            <a href="/" class="nav-link">主页
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a href="/data/charts/" class="nav-link">
+              <i class="mdi mdi-elevation-rise"></i>数据</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item dropdown d-none d-xl-inline-block">
+            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+              <span class="profile-text">Hello, {% block hello_name %}{% endblock %}!</span>
+              <img class="img-xs rounded-circle" src="{% static 'images/faces/look.jpg' %}" alt="Profile image">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+              <a class="dropdown-item mt-2">
+                账号管理
+              </a>
+              <a class="dropdown-item">
+                更改个人密码
+              </a>
+              <a class="dropdown-item" href="/logout/">
+                退出登录
+              </a>
+            </div>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item nav-profile">
+            <div class="nav-link">
+              <div class="user-wrapper">
+                <div class="profile-image">
+                  <img src="{% static 'images/faces/look.jpg' %}" alt="profile image">
+                </div>
+                <div class="text-wrapper">
+                  <p class="profile-name">{% block name %}{% endblock %}</p>
+                  <div>
+                    <small class="designation text-muted">设备号：{% block device_id %}{% endblock %}</small>
+                    <span class="status-indicator {% block device_status %}{% endblock %}"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="menu-icon mdi mdi-television"></i>
+              <span class="menu-title">控制面板</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic-device-list" aria-expanded="false" aria-controls="ui-basic-device-list">
+              <i class="menu-icon mdi mdi-content-copy"></i>
+              <span class="menu-title">查看设备</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic-device-list">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="/device/device/">设备</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/device/log/">设备日志</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic-user-list" aria-expanded="false" aria-controls="ui-basic-user-list">
+              <i class="menu-icon mdi mdi-panda"></i>
+              <span class="menu-title">查看用户</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic-user-list">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="/user/user/">用户</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/user/log/">用户日志</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic-data-list" aria-expanded="false" aria-controls="ui-basic-data-list">
+              <i class="menu-icon mdi mdi-backup-restore"></i>
+              <span class="menu-title">数据</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic-data-list">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="/data/charts/">数据图</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/data/tables/">数据表</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        {% block content_wrapper %}{% endblock %}
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+          <div class="container-fluid clearfix">
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Powered by StarAdmin</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Modified by Zhu Tong
+              <i class="mdi mdi-heart text-danger"></i>
+            </span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+    {% block main_panel %}{% endblock %}
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+  <script src="{% static 'vendors/js/vendor.bundle.addons.js' %}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="{% static 'js/off-canvas.js' %}"></script>
+  <script src="{% static 'js/misc.js' %}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{% static 'js/dashboard.js' %}"></script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>

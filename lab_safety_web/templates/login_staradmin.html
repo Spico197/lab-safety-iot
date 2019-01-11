@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>实验室用电信息统计平台</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{% static 'vendors/iconfonts/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.addons.css' %}">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}">
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+      <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+        <div class="row w-100">
+          <div class="col-lg-4 mx-auto">
+            <div class="auto-form-wrapper">
+
+              <form action="" method="post">
+                  {% csrf_token %}
+                  <div class="text-center">{{ title }}</div>
+
+                <div class="form-group">
+                  <label class="label">手机号码</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="请输入您的手机号码" name="phone_number">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+{#                        <i class="mdi mdi-check-circle-outline"></i>#}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="label">密码</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" placeholder="请输入您的密码" name="password">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+{#                        <i class="mdi mdi-check-circle-outline"></i>#}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input class="btn btn-primary submit-btn btn-block" type="submit" value="登录">
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                  <div class="form-check form-check-flat mt-0">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" checked name="remember_me"> 7天内保持登录状态
+                    </label>
+                  </div>
+                  <a href="#" class="text-small forgot-password text-black">忘记密码</a>
+                </div>
+                <div class="text-block text-center my-3">
+                  <span class="text-small font-weight-semibold">还未注册？</span>
+                  <a href="#" class="text-black text-small">注册新用户</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+  <script src="{% static 'vendors/js/vendor.bundle.addons.js' %}"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="{% static 'js/off-canvas.js' %}"></script>
+  <script src="{% static 'js/misc.js' %}"></script>
+  <!-- endinject -->
+</body>
+
+</html>
