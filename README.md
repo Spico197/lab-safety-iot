@@ -4,6 +4,10 @@
 
 一个实验室用电情况信息统计的物联网平台，可实现数据的实时上传和网页端查看的功能。
 
+![Dashboard](figures/dashboard.png)
+![Management](figures/management.png)
+![DataStream](figures/datastream.png)
+
 #### 软件架构
 
 - Web
