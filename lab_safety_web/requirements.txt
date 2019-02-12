@@ -1,6 +1,5 @@
 dataclasses==0.6
-Django==2.1.5
-djongo==1.2.31
+Django>=2.1.0
 dukpy==0.2.2
 future==0.17.1
 javascripthon==0.10
