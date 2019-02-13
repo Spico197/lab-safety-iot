@@ -8,6 +8,8 @@ from device.models import *
 
 def device(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -47,6 +49,8 @@ def device(request):
 
 def log(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -84,6 +88,8 @@ def log(request):
 
 def new(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -105,11 +111,13 @@ def new(request):
         'return_instruction': '',
     }
 
+    if request.method == "GET":
+       return render(request, 'device_new.html', context=context_data)
+
     if not user.is_admin:
         context_data['return_instruction'] = "只有管理员才有权限新增设备！"
         return render(request, 'device_base.html', context=context_data)
-
-    if request.POST.get('device_id', '') == '':
+    if request.method == "POST" and request.POST.get('device_id', '') == '':
         context_data['return_instruction'] = "请注意，设备号不能为空"
         return render(request, 'device_base.html', context=context_data)
 
@@ -126,6 +134,8 @@ def new(request):
 
 def edit(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -168,6 +178,8 @@ def edit(request):
 
 def delete(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -205,6 +217,8 @@ def delete(request):
 
 def search(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -253,6 +267,8 @@ def log_search(request):
     req_device_id = request.GET.get('device_id', '')
     req_action = request.GET.get('action', '')
     req_phone_number = request.GET.get('phone_number', '')
+    if req_phone_number == '':
+        return redirect('/')
     filter_terms = {}
     if req_device_id:
         filter_terms['device_id'] = req_device_id

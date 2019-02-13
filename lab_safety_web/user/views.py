@@ -2,6 +2,7 @@ import hashlib
 import datetime
 
 # import pyecharts
+from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from django.core.paginator import Paginator
@@ -19,17 +20,16 @@ def sha256(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
 
-def page_not_found(request):
-    response = render_to_response('error-404.html')
-    response.status_code = 404
-    return response
+def page_not_found(request, exception, template_name="error-404.html"):
+    # response = render_to_response('error-404.html')
+    # response.status_code = 404
+    # return response
     # return render(request, 'error-404.html')
+    return render(request, template_name, status=404)
+
 
 def page_error(request):
-    # return render_to_response('error-500.html')
-    response = render_to_response('error-500.html')
-    response.status_code = 500
-    return response
+    return render(request, 'error-500.html', status=500)
 
 
 def logout(request):
@@ -124,8 +124,9 @@ def login(request):
 
 
 def dashboard(request):
-
-    phone_number = request.session.get('phone_number')
+    phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     time_delta = datetime.datetime.now() - datetime.datetime(2019, 1, 1)
 
@@ -225,6 +226,8 @@ def dashboard(request):
 
 def user(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -264,6 +267,8 @@ def user(request):
 
 def log(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -301,6 +306,8 @@ def log(request):
 
 def new(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -321,6 +328,9 @@ def new(request):
         'device_status': status,
         'return_instruction': '',
     }
+
+    if request.method == "GET":
+       return render(request, 'user_new.html', context=context_data)
 
     if not user.is_admin:
         context_data['return_instruction'] = "只有管理员才有权限新增用户！"
@@ -355,6 +365,8 @@ def new(request):
 
 def edit(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -388,6 +400,8 @@ def edit(request):
         if not user.is_admin:
             context_data['return_instruction'] = "只有管理员才有权限编辑用户！"
             return render(request, 'user_base.html', context=context_data)
+        else:
+            return render(request, 'user_edit.html', context=context_data)
 
     if request.POST:
         edit_user = UserModel.objects.get(phone_number=request.POST.get('edit_phone_number', ''))
@@ -429,6 +443,8 @@ def edit(request):
 
 def delete(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -454,18 +470,20 @@ def delete(request):
         context_data['return_instruction'] = "只有管理员才有权限删除设备！"
         return render(request, 'user_base.html', context=context_data)
 
-    if request.GET.get('device_id', '') == '':
-        context_data['return_instruction'] = "请注意，设备号不能为空"
+    if request.GET.get('phone_number', '') == '':
+        context_data['return_instruction'] = "请注意，手机号不能为空"
         return render(request, 'user_base.html', context=context_data)
 
-    DeviceModel.objects.filter(device_id=request.GET.get('device_id', '')).delete()
+    UserModel.objects.filter(phone_number=request.GET.get('phone_number', '')).delete()
     context_data['return_instruction'] = "删除成功"
     # print('删除成功')
-    return redirect('/device/device/')
+    return redirect('/user/user/')
 
 
 def search(request):
     phone_number = request.session.get('phone_number', '')
+    if phone_number == '':
+        return redirect('/')
     user = UserModel.objects.get(phone_number=phone_number)
     if user.is_admin:
         if user.device_id:
@@ -509,6 +527,8 @@ def search(request):
 def log_search(request):
     req_action = request.GET.get('action', '')
     req_phone_number = request.GET.get('phone_number', '')
+    if req_phone_number == '':
+        return redirect('/')
     filter_terms = {}
     if req_action:
         filter_terms['action'] = req_action

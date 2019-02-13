@@ -6,12 +6,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>实验室用电信息统计平台</title>
+  <script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?eee555ab1fc3e0e855490948b7b58874";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
   <link rel="stylesheet" href="{% static 'vendors/iconfonts/mdi/css/materialdesignicons.min.css' %}">
   <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
   <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.addons.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
-    <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.min.js"></script>
+  <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.min.js"></script>
 </head>
 
 <body>
@@ -142,7 +152,12 @@
               </ul>
             </div>
           </li>
-
+          <li class="nav-item">
+            <a class="nav-link" href="/logout/">
+              <i class="menu-icon mdi mdi-logout"></i>
+              <span class="menu-title">退出登录</span>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- partial -->
@@ -168,7 +183,7 @@
   <!-- container-scroller -->
 
   <!-- plugins:js -->
-  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script> -->
   <script src="{% static 'vendors/js/vendor.bundle.addons.js' %}"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
